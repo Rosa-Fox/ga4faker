@@ -7,12 +7,7 @@ class Fake < GoogleTagManager
     if display == "browser"
       fake
     else
-      begin
-        @output_file = File.open("log/#{Time.now.strftime('%Y-%m-%d-%H-%M-%S')}.log", "w")
-        fake
-      ensure
-        @output_file.close
-      end
+      fake_output_to_file
     end
   end
 
@@ -20,7 +15,7 @@ class Fake < GoogleTagManager
 
   def fake
     iterations.to_i.times do
-      faker find_interactions_by_type, interaction_type
+      faker(find_interactions_by_type, interaction_type)
     end
   end
 
@@ -29,29 +24,37 @@ class Fake < GoogleTagManager
       if interaction_type == "pageviews"
         find_interaction_urls(interactions).each do |url|
           get_url(url, environment)
-          if display == "browser"
-            ActionCable.server.broadcast 'faker_channel', get_event(interaction_type).to_json
-          else
-            @output_file.puts get_event(interaction_type)
-            @output_file.puts "\n"
-          end
+          output_event_data(interaction_type)
         end
       else
         find_interaction_urls(interactions).each do |url|
           get_url(url, environment)
           clickables(find_interaction_class(interactions)).each do |clickable|
             clickable.click
-            if display == "browser"
-              ActionCable.server.broadcast 'faker_channel', get_event(interaction_type).to_json
-            else
-              @output_file.puts get_event(interaction_type)
-              @output_file.puts "\n"
-            end
+            output_event_data(interaction_type)
           end
         end
       end
     ensure
       @driver.quit
+    end
+  end
+
+  def output_event_data(interaction_type)
+    if display == "browser"
+      ActionCable.server.broadcast 'faker_channel', get_event(interaction_type).to_json
+    else
+      @output_file.puts get_event(interaction_type)
+      @output_file.puts "\n"
+    end
+  end
+
+  def fake_output_to_file
+    begin
+      @output_file = File.open("log/#{Time.now.strftime('%Y-%m-%d-%H-%M-%S')}.log", "w")
+      fake
+    ensure
+      @output_file.close
     end
   end
 
