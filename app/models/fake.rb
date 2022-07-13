@@ -4,11 +4,15 @@ class Fake < GoogleTagManager
   end
 
   def run
-    begin
-      @output_file = File.open("log/#{Time.now.strftime('%Y-%m-%d-%H-%M-%S')}.log", "w")
+    if display == "browser"
       fake
-    ensure
-      @output_file.close
+    else
+      begin
+        @output_file = File.open("log/#{Time.now.strftime('%Y-%m-%d-%H-%M-%S')}.log", "w")
+        fake
+      ensure
+        @output_file.close
+      end
     end
   end
 
