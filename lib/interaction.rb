@@ -4,7 +4,7 @@ module Interaction
   end
 
   def find_interactions_by_type
-    interactions[interaction]
+    interactions[interaction_type]
   end
 
   def find_interaction_class(interactions)

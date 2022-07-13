@@ -21,8 +21,12 @@ class GoogleTagManager
     options[:environment]
   end
 
-  def interaction
-    options[:interaction]
+  def interaction_type
+    options[:interaction_type]
+  end
+
+  def display
+    options[:display]
   end
 
   def iterations

@@ -16,7 +16,7 @@ class Fake < GoogleTagManager
 
   def fake
     iterations.to_i.times do
-      faker find_interactions_by_type, interaction
+      faker find_interactions_by_type, interaction_type
     end
   end
 
