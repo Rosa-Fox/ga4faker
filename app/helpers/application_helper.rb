@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def interaction_types
-    @interaction_typs ||= interactions.keys
+    @interaction_types ||= interactions.keys
   end
 
   def environment_url(url, environment)
