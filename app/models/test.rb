@@ -12,12 +12,14 @@ class Test < GoogleTagManager
   def tester(interactions)
     begin
       find_interaction_urls(interactions).each do |url|
-        get_url(url, environment)
-        clickables(find_interaction_class(interactions)).each do |clickable|
-          if interaction_type == "tabs"
-            test_tab_events(clickable)
-          elsif interaction_type == "accordions"
-            test_accordion_events(clickable)
+        iterations.to_i.times do
+          get_url(url, environment)
+          clickables(find_interaction_class(interactions)).each do |clickable|
+            if interaction_type == "tabs"
+              test_tab_events(clickable)
+            elsif interaction_type == "accordions"
+              test_accordion_events(clickable)
+            end
           end
         end
       end

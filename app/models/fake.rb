@@ -14,24 +14,26 @@ class Fake < GoogleTagManager
   private
 
   def fake
-    iterations.to_i.times do
-      faker(find_interactions_by_type, interaction_type)
-    end
+    faker(find_interactions_by_type, interaction_type)
   end
 
   def faker(interactions, interaction_type)
     begin
       if interaction_type == "pageviews"
         find_interaction_urls(interactions).each do |url|
-          get_url(url, environment)
-          output_event_data(interaction_type)
+          iterations.to_i.times do
+            get_url(url, environment)
+            output_event_data(interaction_type)
+          end
         end
       else
         find_interaction_urls(interactions).each do |url|
-          get_url(url, environment)
-          clickables(find_interaction_class(interactions)).each do |clickable|
-            clickable.click
-            output_event_data(interaction_type)
+          iterations.to_i.times do
+            get_url(url, environment)
+            clickables(find_interaction_class(interactions)).each do |clickable|
+              clickable.click
+              output_event_data(interaction_type)
+            end
           end
         end
       end

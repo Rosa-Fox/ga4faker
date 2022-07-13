@@ -30,7 +30,7 @@ class GoogleTagManager
   end
 
   def iterations
-    1
+     options[:iterations] ||= 1
   end
 
   def clickables(klass)
