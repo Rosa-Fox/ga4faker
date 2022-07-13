@@ -29,16 +29,24 @@ class Fake < GoogleTagManager
       if interaction_type == "pageviews"
         find_interaction_urls(interactions).each do |url|
           get_url(url, environment)
-          @output_file.puts get_event(interaction_type)
-          @output_file.puts "\n"
+          if display == "browser"
+            ActionCable.server.broadcast 'faker_channel', get_event(interaction_type).to_json
+          else
+            @output_file.puts get_event(interaction_type)
+            @output_file.puts "\n"
+          end
         end
       else
         find_interaction_urls(interactions).each do |url|
           get_url(url, environment)
           clickables(find_interaction_class(interactions)).each do |clickable|
             clickable.click
-            @output_file.puts get_event(interaction_type)
-            @output_file.puts "\n"
+            if display == "browser"
+              ActionCable.server.broadcast 'faker_channel', get_event(interaction_type).to_json
+            else
+              @output_file.puts get_event(interaction_type)
+              @output_file.puts "\n"
+            end
           end
         end
       end
@@ -50,9 +58,9 @@ class Fake < GoogleTagManager
   def get_event(interaction_type)
     events.each do |event|
       if interaction_type == "pageviews"
-        return event.to_json if event["event"] == "config_ready"
+        return event if event["event"] == "config_ready"
       else
-        return event.to_json if event["event"] == "analytics"
+        return event if event["event"] == "analytics"
       end
     end
     { error: "Unknown interaction type #{interaction_type}" }.to_json
