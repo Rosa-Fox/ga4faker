@@ -34,7 +34,7 @@ class CreateEvents < GoogleTagManager
         end
       end
     ensure
-      @driver.quit
+      driver.quit
     end
   end
 

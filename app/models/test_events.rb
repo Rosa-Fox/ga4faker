@@ -24,7 +24,7 @@ class TestEvents < GoogleTagManager
         end
       end
     ensure
-      @driver.quit
+      driver.quit
     end
   end
 
@@ -57,7 +57,7 @@ class TestEvents < GoogleTagManager
   end
 
   def current_url
-    uri = URI.parse(@driver.current_url)
+    uri = URI.parse(driver.current_url)
     if uri.fragment
       "#{uri.path}##{uri.fragment}"
     else
