@@ -33,15 +33,15 @@ class GoogleTagManager
      options[:iterations] ||= 1
   end
 
-  def clickables(klass)
-    driver.find_elements(class: klass)
+  def clickables
+    driver.find_elements(class: find_interaction_class)
   end
 
   def events
     driver.execute_script("return dataLayer")
   end
 
-  def get_url(url, environment)
+  def get_url(url)
     url = environment_url(url, environment)
     @driver.get url
   end

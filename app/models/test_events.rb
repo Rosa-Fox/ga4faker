@@ -4,17 +4,17 @@ class TestEvents < GoogleTagManager
   end
 
   def run
-    tester find_interactions_by_type
+    tester
   end
 
   private
 
-  def tester(interactions)
+  def tester
     begin
-      find_interaction_urls(interactions).each do |url|
+      find_interaction_urls.each do |url|
         iterations.to_i.times do
-          get_url(url, environment)
-          clickables(find_interaction_class(interactions)).each do |clickable|
+          get_url(url)
+          clickables.each do |clickable|
             if interaction_type == "tabs"
               test_tab_events(clickable)
             elsif interaction_type == "accordions"

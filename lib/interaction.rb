@@ -7,12 +7,12 @@ module Interaction
     interactions[interaction_type]
   end
 
-  def find_interaction_class(interactions)
-    interactions["class"]
+  def find_interaction_class
+    find_interactions_by_type["class"]
   end
 
-  def find_interaction_urls(interactions)
-    interactions["urls"]
+  def find_interaction_urls
+    find_interactions_by_type["urls"]
   end
 
   def environment_url(url, environment)
