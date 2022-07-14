@@ -1,4 +1,4 @@
-class Fake < GoogleTagManager
+class CreateEvents < GoogleTagManager
   def initialize(options)
     super
   end
