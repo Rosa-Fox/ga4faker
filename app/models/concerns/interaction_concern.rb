@@ -1,6 +1,8 @@
-module Interaction
+module InteractionConcern
+  extend ActiveSupport::Concern
+
   def interaction_data
-    YAML.load_file("data/interactions.yml")
+    ApplicationController.helpers.interactions
   end
 
   def find_interactions_by_type

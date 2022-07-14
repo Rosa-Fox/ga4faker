@@ -6,8 +6,4 @@ module ApplicationHelper
   def interaction_types
     @interaction_types ||= interactions.keys
   end
-
-  def environment_url(url, environment)
-    url.gsub("[ENVIRONMENT]", environment)
-  end
 end

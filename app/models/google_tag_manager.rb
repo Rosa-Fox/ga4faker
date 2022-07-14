@@ -1,10 +1,9 @@
 require "webdrivers"
 require "yaml"
 require "fileutils"
-require_relative '../../lib/interaction'
 
 class GoogleTagManager
-  include Interaction
+  include InteractionConcern
   attr_reader :options, :interactions, :driver, :output_file
 
   def initialize(options)
@@ -43,6 +42,6 @@ class GoogleTagManager
 
   def get_url(url)
     url = environment_url(url, environment)
-    @driver.get url
+    driver.get url
   end
 end
