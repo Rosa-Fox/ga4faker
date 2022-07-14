@@ -43,7 +43,7 @@ class TestEvents < GoogleTagManager
   def test_tab_events(tab)
     tab.click
 
-    expected_event = create_event(event_name(tab), events.length, data_attributes(tab), data_attributes["action"])
+    expected_event = create_event(event_name(tab), events.length, data_attributes(tab), data_attributes(tab)["state"])
     test_result(expected_event)
   end
 
